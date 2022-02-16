@@ -30,3 +30,54 @@ dependencies {
     testCompile "junit:junit:4.11"
 }
 */
+
+// 1. 사용자 정의 task 만들기
+task hello {
+    println 'Gradle Hello'
+}
+
+// 2-1. task 실행 순서 제어하기
+task run << {
+    println 'runing now'
+}
+
+task start {
+    println 'Gradle Start'
+}
+
+// 2-2. task 실행 순서 제어하기
+task cellphone {
+    description = 'Display calling message'
+    doLast {
+        println '통화하기'
+    }
+    doFirst {
+        println '전화걸기'
+    }
+    doLast {
+        println '전화끊기'
+    }
+}
+
+// 3-1. 디폴트 task 지정하기
+// 3-2. task에 설명 추가하기
+// 3-3. 다른 task와 연관 지어 실행하기
+// 3-4. 로깅 설정하기
+defaultTasks 'myBasicTask'
+task myBasicTask(description: '디폴트 task 입니다.', dependsOn: 'other') << {
+    logging.level = LogLevel.DEBUG
+    println "default task"
+}
+
+task other << {
+    println "other run"
+}
+
+// 4. task 그룹화하기
+def name = 'soonee'
+task groupTask1(group: name) << {
+    println "group task 1"
+}
+task groupTask2(group: name) << {
+    println "group task 2"
+}
